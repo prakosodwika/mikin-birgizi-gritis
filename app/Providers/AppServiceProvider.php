@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\SatuanPelayananPemenuhanGiziRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\SatuanPelayananPemenuhanGiziRepository;
+use App\Repositories\UserRepository;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +19,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(SatuanPelayananPemenuhanGiziRepositoryInterface::class, SatuanPelayananPemenuhanGiziRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(\App\Repositories\Interfaces\ProvinsiRepositoryInterface::class, \App\Repositories\ProvinsiRepository::class);
+        $this->app->bind(\App\Repositories\Interfaces\KabupatenRepositoryInterface::class, \App\Repositories\KabupatenRepository::class);
+        $this->app->bind(\App\Repositories\Interfaces\KecamatanRepositoryInterface::class, \App\Repositories\KecamatanRepository::class);
+        $this->app->bind(\App\Repositories\Interfaces\SekolahRepositoryInterface::class, \App\Repositories\SekolahRepository::class);
+        $this->app->bind(\App\Repositories\Interfaces\StandarGiziRepositoryInterface::class, \App\Repositories\StandarGiziRepository::class);
     }
 
     /**

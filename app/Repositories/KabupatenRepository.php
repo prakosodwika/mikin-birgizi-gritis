@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\Kabupaten;
+use App\Repositories\Interfaces\KabupatenRepositoryInterface;
+
+class KabupatenRepository implements KabupatenRepositoryInterface
+{
+    public function getAll(array $filters = [])
+    {
+        return Kabupaten::query()
+            ->when(isset($filters['search']), function($q) use ($filters) {
+                return $q->where('name', 'like', "%" . $filters['search'] . "%");
+            })
+            ->latest()
+            ->paginate($filters['per_page'] ?? 10);
+    }
+
+    public function findById(int $id)
+    {
+        return Kabupaten::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return Kabupaten::create($data);
+    }
+
+    public function update(int $id, array $data)
+    {
+        $kabupaten = Kabupaten::findOrFail($id);
+        $kabupaten->update($data);
+        return $kabupaten->fresh();
+    }
+
+    public function delete(int $id)
+    {
+        return Kabupaten::destroy($id);
+    }
+}
