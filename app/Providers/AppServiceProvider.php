@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Interfaces\KecamatanRepositoryInterface::class, \App\Repositories\KecamatanRepository::class);
         $this->app->bind(\App\Repositories\Interfaces\SekolahRepositoryInterface::class, \App\Repositories\SekolahRepository::class);
         $this->app->bind(\App\Repositories\Interfaces\StandarGiziRepositoryInterface::class, \App\Repositories\StandarGiziRepository::class);
+        $this->app->bind(\App\Repositories\Interfaces\ProgramGiziRepositoryInterface::class, \App\Repositories\ProgramGiziRepository::class);
     }
 
     /**

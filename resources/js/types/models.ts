@@ -80,3 +80,37 @@ export interface StandarGiziHistory {
     created_at: string;
     user?: AppUser;
 }
+
+export interface ProgramGiziBahan {
+    id: number;
+    program_gizi_id: number;
+    nama_bahan: string;
+    satuan: string;
+    jumlah: number;
+    kalori_per_100g: number;
+    protein_per_100g: number;
+    lemak_per_100g: number;
+    karbohidrat_per_100g: number;
+    harga_per_satuan: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface ProgramGizi {
+    id: number;
+    satuan_pelayanan_pemenuhan_gizi_id: number;
+    tanggal: string;
+    nama_program: string;
+    kelompok_usia: 'PAUD' | 'SD' | 'SMP' | 'SMA' | 'Ibu Hamil' | 'Ibu Menyusui';
+    catatan: string | null;
+    jumlah_porsi: number;
+    status_validasi: 'pending' | 'valid' | 'invalid';
+    kalori_total: number;
+    protein_total: number;
+    lemak_total: number;
+    karbohidrat_total: number;
+    harga_per_porsi: number;
+    created_at: string;
+    updated_at: string;
+    bahans?: ProgramGiziBahan[];
+}

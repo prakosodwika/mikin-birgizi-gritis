@@ -87,6 +87,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [\App\Http\Controllers\SatuanPelayanan\SekolahController::class, 'index'])->name('index');
             Route::get('/{id}', [\App\Http\Controllers\SatuanPelayanan\SekolahController::class, 'show'])->name('show');
         });
+
+        Route::prefix('program-gizi')
+            ->name('program-gizi.')
+            ->group(function () {
+            Route::get('/', [\App\Http\Controllers\SatuanPelayanan\ProgramGiziController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\SatuanPelayanan\ProgramGiziController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\SatuanPelayanan\ProgramGiziController::class, 'store'])->name('store');
+            Route::get('/{id}', [\App\Http\Controllers\SatuanPelayanan\ProgramGiziController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [\App\Http\Controllers\SatuanPelayanan\ProgramGiziController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\SatuanPelayanan\ProgramGiziController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\SatuanPelayanan\ProgramGiziController::class, 'destroy'])->name('destroy');
+        });
     });
 });
 

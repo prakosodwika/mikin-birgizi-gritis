@@ -22,6 +22,7 @@ import { index as kecamatanIndexRoute } from '@/routes/kecamatan';
 import { index as sekolahIndexRoute } from '@/routes/sekolah';
 import { index as standarGiziIndex } from '@/routes/standar-gizi';
 import { index as pengelolaSekolahIndexRoute } from '@/routes/pengelola/sekolah';
+import { index as pengelolaProgramGiziIndexRoute } from '@/routes/pengelola/program-gizi';
 import type { NavItem } from '@/types';
 import { usePage } from '@inertiajs/react';
 
@@ -94,6 +95,12 @@ export function AppSidebar() {
     }
 
     if (auth.user?.role === 'operator_satuan_pelayanan_pemenuhan_gizi') {
+        mainNavItems.push({
+            title: 'Program Gizi',
+            href: pengelolaProgramGiziIndexRoute().url,
+            icon: BookOpen,
+        });
+
         mainNavItems.push({
             title: 'Sekolah Saya',
             href: pengelolaSekolahIndexRoute().url,
