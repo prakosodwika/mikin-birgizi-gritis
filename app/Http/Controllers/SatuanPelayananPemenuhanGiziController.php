@@ -22,8 +22,8 @@ class SatuanPelayananPemenuhanGiziController extends Controller
         return Inertia::render('SatuanPelayananPemenuhanGizi/Index', [
             'satuan_pelayanan_pemenuhan_gizis' => $this->service->getAll($request->all()),
             'provinsis' => Provinsi::all(),
-            'kabupatens' => Kabupaten::all(), // Ideally filtered by selected provinsi on frontend
-            'kecamatans' => Kecamatan::all(), // Ideally filtered by selected kabupaten on frontend
+            'kabupatens' => Kabupaten::all(),
+            'kecamatans' => Kecamatan::all(),
             'filters' => $request->only(['search', 'status', 'provinsi_id', 'kabupaten_id', 'is_flagged']),
         ]);
     }
@@ -31,7 +31,7 @@ class SatuanPelayananPemenuhanGiziController extends Controller
     public function show(int $id)
     {
         $unit = $this->service->findById($id);
-        $unit->load(['users', 'provinsi', 'kabupaten', 'kecamatan']); 
+        $unit->load(['users', 'provinsi', 'kabupaten', 'kecamatan']);
 
         return Inertia::render('SatuanPelayananPemenuhanGizi/Show', [
             'satuan_pelayanan' => $unit,

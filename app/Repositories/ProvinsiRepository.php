@@ -7,7 +7,7 @@ use App\Repositories\Interfaces\ProvinsiRepositoryInterface;
 
 class ProvinsiRepository implements ProvinsiRepositoryInterface
 {
-    public function getAll(array $filters = [])
+    public function paginate(array $filters = [])
     {
         return Provinsi::query()
             ->when(isset($filters['search']), function($q) use ($filters) {
@@ -17,9 +17,14 @@ class ProvinsiRepository implements ProvinsiRepositoryInterface
             ->paginate($filters['per_page'] ?? 10);
     }
 
-    public function findById(int $id)
+    public function getAll(array $with = [])
     {
-        return Provinsi::findOrFail($id);
+        return Provinsi::with($with)->get();
+    }
+
+    public function findById(int $id, array $with = [])
+    {
+        return Provinsi::with($with)->findOrFail($id);
     }
 
     public function create(array $data)

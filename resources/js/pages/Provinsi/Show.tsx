@@ -1,17 +1,14 @@
 // resources/js/pages/Provinsi/Show.tsx
 import { Head, Link } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
+import { ArrowLeft } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { ArrowLeft } from 'lucide-react';
-import { type BreadcrumbItem } from '@/types';
-import { index as provinsiIndexRoute } from '@/routes/provinsi';
+import AppLayout from '@/layouts/app-layout';
 
-interface Provinsi {
-    id: number;
-    name: string;
-}
+import { index as provinsiIndexRoute } from '@/routes/provinsi';
+import type { BreadcrumbItem } from '@/types';
+import type { Provinsi } from '@/types/models/regions';
 
 interface Props {
     provinsi: Provinsi;
@@ -37,16 +34,17 @@ export default function ProvinsiShow({ provinsi }: Props) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`Detail Provinsi: ${provinsi.name}`} />
             <div className="flex flex-col gap-6 p-6">
-                <div className="flex items-center gap-4">
-                    <Button variant="outline" size="icon" asChild>
-                        <Link href={provinsiIndexRoute().url}>
-                            <ArrowLeft className="size-4" />
-                        </Link>
-                    </Button>
+                <div className="flex justify-between items-center gap-4">
                     <div>
                         <h1 className="text-2xl font-semibold">Detail Provinsi</h1>
                         <p className="text-muted-foreground text-sm">Informasi lengkap data provinsi.</p>
                     </div>
+                    <Button variant="outline" asChild>
+                        <Link href={provinsiIndexRoute().url}>
+                            <ArrowLeft className="size-4" />
+                            Back
+                        </Link>
+                    </Button>
                 </div>
 
                 <Card>
@@ -64,7 +62,6 @@ export default function ProvinsiShow({ provinsi }: Props) {
                                 <p className="text-base">{provinsi.name}</p>
                             </div>
                         </div>
-                        <Separator />
                     </CardContent>
                 </Card>
             </div>

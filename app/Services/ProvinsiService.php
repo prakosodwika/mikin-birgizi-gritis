@@ -11,9 +11,14 @@ class ProvinsiService
         protected ProvinsiRepositoryInterface $repository
     ) {}
 
-    public function getAll(array $filters = [])
+    public function paginate(array $filters = [])
     {
-        return $this->repository->getAll($filters);
+        return $this->repository->paginate($filters);
+    }
+
+    public function getAll(array $with = [])
+    {
+        return $this->repository->getAll($with);
     }
 
     public function findById(int $id)

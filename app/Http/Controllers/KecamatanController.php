@@ -6,6 +6,7 @@ use App\Services\KecamatanService;
 use App\Services\KabupatenService;
 use App\Http\Requests\StoreKecamatanRequest;
 use App\Http\Requests\UpdateKecamatanRequest;
+use App\Services\ProvinsiService;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -13,14 +14,16 @@ class KecamatanController extends Controller
 {
     public function __construct(
         protected KecamatanService $service,
-        protected KabupatenService $kabupatenService
+        protected KabupatenService $kabupatenService,
+        protected ProvinsiService $provinsiService
     ) {}
 
     public function index(Request $request)
     {
         return Inertia::render('Kecamatan/Index', [
-            'kecamatan' => $this->service->getAll($request->all()),
-            'kabupatens' => $this->kabupatenService->getAll(['per_page' => 100])['data'] ?? [],
+            'kecamatan' => $this->service->paginate($request->all()),
+            'kabupatens' => $this->kabupatenService->getAll(),
+            'provinsis' => $this->provinsiService->getAll(),
             'filters' => $request->only(['search']),
         ]);
     }

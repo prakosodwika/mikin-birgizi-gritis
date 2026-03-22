@@ -7,9 +7,10 @@ use App\Repositories\Interfaces\KecamatanRepositoryInterface;
 
 class KecamatanRepository implements KecamatanRepositoryInterface
 {
-    public function getAll(array $filters = [])
+    public function paginate(array $filters = [])
     {
         return Kecamatan::query()
+            ->with('kabupaten.provinsi')
             ->when(isset($filters['search']), function($q) use ($filters) {
                 return $q->where('name', 'like', "%" . $filters['search'] . "%");
             })
@@ -17,9 +18,14 @@ class KecamatanRepository implements KecamatanRepositoryInterface
             ->paginate($filters['per_page'] ?? 10);
     }
 
-    public function findById(int $id)
+    public function getAll(array $with = [])
     {
-        return Kecamatan::findOrFail($id);
+        return Kecamatan::with($with)->get();
+    }
+
+    public function findById(int $id, array $with = [])
+    {
+        return Kecamatan::with($with)->findOrFail($id);
     }
 
     public function create(array $data)

@@ -19,8 +19,8 @@ class KabupatenController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Kabupaten/Index', [
-            'kabupaten' => $this->service->getAll($request->all()),
-            'provinsis' => $this->provinsiService->getAll(['per_page' => 100])['data'] ?? [],
+            'kabupaten' => $this->service->paginate($request->all()),
+            'provinsis' => $this->provinsiService->getAll(),
             'filters' => $request->only(['search']),
         ]);
     }
@@ -29,7 +29,7 @@ class KabupatenController extends Controller
     {
         $kabupaten = $this->service->findById($id);
         $kabupaten->load('provinsi');
-        
+
         return Inertia::render('Kabupaten/Show', [
             'kabupaten' => $kabupaten,
         ]);

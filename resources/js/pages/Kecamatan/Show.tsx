@@ -1,26 +1,14 @@
 // resources/js/pages/Kecamatan/Show.tsx
 import { Head, Link } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
+import { ArrowLeft } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { ArrowLeft } from 'lucide-react';
-import { type BreadcrumbItem } from '@/types';
-import { index as kecamatanIndexRoute } from '@/routes/kecamatan';
+import AppLayout from '@/layouts/app-layout';
 
-interface Kecamatan {
-    id: number;
-    name: string;
-    kabupaten_id: number;
-    kabupaten?: {
-        id: number;
-        name: string;
-        provinsi?: {
-            id: number;
-            name: string;
-        };
-    };
-}
+import { index as kecamatanIndexRoute } from '@/routes/kecamatan';
+import type { BreadcrumbItem } from '@/types';
+import type { Kecamatan } from '@/types/models/regions';
 
 interface Props {
     kecamatan: Kecamatan;
@@ -81,7 +69,6 @@ export default function KecamatanShow({ kecamatan }: Props) {
                                 <p className="text-base">{kecamatan.kabupaten?.provinsi?.name || '-'}</p>
                             </div>
                         </div>
-                        <Separator />
                     </CardContent>
                 </Card>
             </div>

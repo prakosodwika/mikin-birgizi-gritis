@@ -15,7 +15,7 @@ class ProvinsiController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Provinsi/Index', [
-            'provinsi' => $this->service->getAll($request->all()),
+            'provinsi' => $this->service->paginate($request->all()),
             'filters' => $request->only(['search']),
         ]);
     }
