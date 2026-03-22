@@ -21,8 +21,8 @@ class SekolahController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Sekolah/Index', [
-            'sekolahs' => $this->service->getAll($request->all()),
-            'kecamatans' => $this->kecamatanService->getAll(['per_page' => 100])['data'] ?? [],
+            'sekolahs' => $this->service->paginate($request->all()),
+            'kecamatans' => $this->kecamatanService->getAll(),
             'sppgs' => $this->sppgService->getAll(['per_page' => 100])['data'] ?? [],
             'filters' => $request->only(['search', 'level']),
         ]);

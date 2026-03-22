@@ -6,10 +6,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { show as provinsiShowRoute } from '@/routes/provinsi';
-import type { ProvinsiPaination } from '@/types/models/regions';
+import type { ProvinsiPagination } from '@/types/models/regions';
 
 interface Props  {
-    provinsi: ProvinsiPaination;
+    provinsi: ProvinsiPagination;
     openEditDialog: (item: any) => void;
     handleDelete: (item: any) => void;
 }

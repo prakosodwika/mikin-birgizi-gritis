@@ -23,12 +23,12 @@ import {
 } from '@/routes/kabupaten';
 
 import type { BreadcrumbItem } from '@/types';
-import type { Kabupaten, KabupatenPaination, Provinsi } from '@/types/models/regions';
+import type { Kabupaten, KabupatenPagination, Provinsi } from '@/types/models/regions';
 import KabupatenForm from './Form';
 import KabupatenTable from './Table';
 
 interface Props {
-    kabupaten: KabupatenPaination;
+    kabupaten: KabupatenPagination;
     provinsis: Provinsi[];
     filters: {
         search?: string;

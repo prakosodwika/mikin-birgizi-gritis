@@ -7,7 +7,7 @@ use App\Repositories\Interfaces\SekolahRepositoryInterface;
 
 class SekolahRepository implements SekolahRepositoryInterface
 {
-    public function getAll(array $filters = [])
+    public function paginate(array $filters = [])
     {
         return Sekolah::query()
             ->with(['kecamatan', 'satuanPelayananPemenuhanGizi'])
@@ -28,9 +28,14 @@ class SekolahRepository implements SekolahRepositoryInterface
             ->withQueryString();
     }
 
-    public function findById(int $id)
+    public function getAll(array $with = [])
     {
-        return Sekolah::with(['kecamatan.kabupaten.provinsi', 'satuanPelayananPemenuhanGizi'])->findOrFail($id);
+        return Sekolah::with($with)->get();
+    }
+
+    public function findById(int $id, array $with = [])
+    {
+        return Sekolah::with($with)->findOrFail($id);
     }
 
     public function create(array $data)

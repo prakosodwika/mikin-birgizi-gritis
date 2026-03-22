@@ -7,6 +7,9 @@ use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Http\Requests\StoreSatuanPelayananPemenuhanGiziRequest;
 use App\Http\Requests\UpdateSatuanPelayananPemenuhanGiziRequest;
+use App\Services\KabupatenService;
+use App\Services\KecamatanService;
+use App\Services\ProvinsiService;
 use App\Services\SatuanPelayananPemenuhanGiziService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,16 +17,19 @@ use Inertia\Inertia;
 class SatuanPelayananPemenuhanGiziController extends Controller
 {
     public function __construct(
-        protected SatuanPelayananPemenuhanGiziService $service
+        protected SatuanPelayananPemenuhanGiziService $service,
+        protected ProvinsiService $provinsiService,
+        protected KabupatenService $kabupatenService,
+        protected KecamatanService $kecamatanService
     ) {}
 
     public function index(Request $request)
     {
         return Inertia::render('SatuanPelayananPemenuhanGizi/Index', [
-            'satuan_pelayanan_pemenuhan_gizis' => $this->service->getAll($request->all()),
-            'provinsis' => Provinsi::all(),
-            'kabupatens' => Kabupaten::all(),
-            'kecamatans' => Kecamatan::all(),
+            'satuanPelayananPemenuhanGizis' => $this->service->getAll($request->all()),
+            'provinsis' => $this->provinsiService->getAll(),
+            'kabupatens' => $this->kabupatenService->getAll(),
+            'kecamatans' => $this->kecamatanService->getAll(),
             'filters' => $request->only(['search', 'status', 'provinsi_id', 'kabupaten_id', 'is_flagged']),
         ]);
     }

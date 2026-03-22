@@ -34,6 +34,9 @@ class SatuanPelayananPemenuhanGiziService
                 'address' => $data['address'],
                 'contact_number' => $data['contact_number'] ?? null,
                 'status' => $data['status'] ?? 'active',
+                'provinsi_id' => $data['provinsi_id'] ?? null,
+                'kabupaten_id' => $data['kabupaten_id'] ?? null,
+                'kecamatan_id' => $data['kecamatan_id'] ?? null,
             ]);
 
             // 2. Buat User Operator Otomatis

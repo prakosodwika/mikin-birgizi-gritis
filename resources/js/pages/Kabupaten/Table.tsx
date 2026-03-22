@@ -6,10 +6,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { show as kabupatenShowRoute } from '@/routes/kabupaten';
-import type { KabupatenPaination } from '@/types/models/regions';
+import type { KabupatenPagination } from '@/types/models/regions';
 
 interface Props  {
-    kabupaten: KabupatenPaination;
+    kabupaten: KabupatenPagination;
     openEditDialog: (item: any) => void;
     handleDelete: (item: any) => void;
 }

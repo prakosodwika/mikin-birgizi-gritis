@@ -21,6 +21,6 @@ export interface Kecamatan {
     provinsi?: Provinsi;
 }
 
-export type ProvinsiPaination = Pagination<Provinsi>
-export type KabupatenPaination = Pagination<Kabupaten>
-export type KecamatanPaination = Pagination<Kecamatan>
+export type ProvinsiPagination = Pagination<Provinsi>
+export type KabupatenPagination = Pagination<Kabupaten>
+export type KecamatanPagination = Pagination<Kecamatan>

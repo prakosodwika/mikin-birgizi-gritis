@@ -1,18 +1,10 @@
-import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
 import { Head, useForm, router } from '@inertiajs/react';
+import { Plus, Search, Building2, UserCog } from 'lucide-react';
 import { useState } from 'react';
+
+import InputError from '@/components/input-error';
+
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
 import {
     Dialog,
     DialogContent,
@@ -21,6 +13,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
     Select,
     SelectContent,
@@ -28,33 +22,24 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, Plus, Search, Building2, UserCog, MapPin, AlertTriangle } from 'lucide-react';
-import { SatuanPelayananPemenuhanGizi, Provinsi, Kabupaten, Kecamatan } from '@/types/models';
-import InputError from '@/components/input-error';
+import { Separator } from '@/components/ui/separator';
+import AppLayout from '@/layouts/app-layout';
+
 import {
     index as satuanPelayananIndex,
     store as satuanPelayananStore,
     update as satuanPelayananUpdate,
     destroy as satuanPelayananDestroy,
-    show as satuanPelayananShow
 } from '@/routes/satuan-pelayanan';
-import { Separator } from '@/components/ui/separator';
+
+
+import type { BreadcrumbItem } from '@/types';
+import type { SatuanPelayananPemenuhanGizi, Provinsi, Kabupaten, Kecamatan } from '@/types/models';
+import type { SatuanPelayananPemenuhanGiziPagination } from '@/types/models/satuanPelayananPemenuhanGizi';
+import SatuanPelayananTable from './Table';
 
 interface Props {
-    satuan_pelayanan_pemenuhan_gizis: {
-        data: SatuanPelayananPemenuhanGizi[];
-        links: any[];
-        current_page: number;
-        last_page: number;
-        total: number;
-    };
+    satuanPelayananPemenuhanGizis: SatuanPelayananPemenuhanGiziPagination;
     provinsis: Provinsi[];
     kabupatens: Kabupaten[];
     kecamatans: Kecamatan[];
@@ -74,7 +59,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function SatuanPelayananIndex({ satuan_pelayanan_pemenuhan_gizis, provinsis, kabupatens, kecamatans, filters }: Props) {
+export default function SatuanPelayananIndex({ satuanPelayananPemenuhanGizis, provinsis, kabupatens, kecamatans, filters }: Props) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingUnit, setEditingUnit] = useState<SatuanPelayananPemenuhanGizi | null>(null);
     const [searchTerm, setSearchTerm] = useState(filters.search || '');
@@ -122,6 +107,7 @@ export default function SatuanPelayananIndex({ satuan_pelayanan_pemenuhan_gizis,
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
         if (editingUnit) {
             put(satuanPelayananUpdate(editingUnit.id).url, {
                 onSuccess: () => {
@@ -207,81 +193,11 @@ export default function SatuanPelayananIndex({ satuan_pelayanan_pemenuhan_gizis,
                 </div>
 
                 <div className="rounded-md border">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Nama Unit</TableHead>
-                                <TableHead>Wilayah</TableHead>
-                                <TableHead>Alamat</TableHead>
-                                <TableHead>Kontak</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead className="w-10"></TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {satuan_pelayanan_pemenuhan_gizis.data.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
-                                        Tidak ada data satuan pelayanan ditemukan.
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                satuan_pelayanan_pemenuhan_gizis.data.map((unit) => (
-                                    <TableRow key={unit.id} className={unit.flagged_at ? "bg-destructive/5" : ""}>
-                                        <TableCell className="font-medium">
-                                            <div className="flex items-center gap-2">
-                                                {unit.name}
-                                                {unit.flagged_at && (
-                                                    <AlertTriangle className="size-4 text-destructive" />
-                                                )}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex flex-col text-xs">
-                                                <span>{unit.kabupaten?.name || '-'}</span>
-                                                <span className="text-muted-foreground">{unit.provinsi?.name || '-'}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="max-w-xs truncate">{unit.address}</TableCell>
-                                        <TableCell>{unit.contact_number || '-'}</TableCell>
-                                        <TableCell>
-                                            <div className="flex flex-col gap-1">
-                                                <Badge variant={unit.status === 'active' ? 'default' : 'destructive'}>
-                                                    {unit.status === 'active' ? 'Aktif' : 'Nonaktif'}
-                                                </Badge>
-                                                {unit.flagged_at && (
-                                                    <Badge variant="destructive" className="text-[10px] py-0">Flagged</Badge>
-                                                )}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button variant="ghost" size="icon">
-                                                        <MoreHorizontal className="size-4" />
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem onClick={() => router.visit(satuanPelayananShow(unit.id).url)}>
-                                                        Detail
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem onClick={() => openEditDialog(unit)}>
-                                                        Ubah
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem
-                                                        className="text-destructive"
-                                                        onClick={() => handleDelete(unit.id)}
-                                                    >
-                                                        Hapus
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                            )}
-                        </TableBody>
-                    </Table>
+                    <SatuanPelayananTable
+                        satuanPelayananPemenuhanGizis={satuanPelayananPemenuhanGizis}
+                        openEditDialog={openEditDialog}
+                        handleDelete={handleDelete}
+                    />
                 </div>
             </div>
 

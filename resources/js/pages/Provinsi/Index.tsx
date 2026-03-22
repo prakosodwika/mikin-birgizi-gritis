@@ -23,12 +23,12 @@ import {
 } from '@/routes/provinsi';
 
 import type { BreadcrumbItem } from '@/types';
-import type { Provinsi, ProvinsiPaination } from '@/types/models/regions';
+import type { Provinsi, ProvinsiPagination } from '@/types/models/regions';
 import ProvinsiForm from './Form';
 import ProvinsiTable from './Table';
 
 interface Props {
-    provinsi: ProvinsiPaination;
+    provinsi: ProvinsiPagination;
     filters: {
         search?: string;
     };
